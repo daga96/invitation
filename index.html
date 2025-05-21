@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Observance Invitation</title>
+    <style>
+      body {
+        background-color: #a8c9d6;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        padding: 40px;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .page {
+        display: none;
+        padding: 40px 20px;
+      }
+
+      .active {
+        display: block;
+      }
+
+      .invitation {
+        text-align: left;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .activities {
+        border-left: 2px solid #000;
+        padding-left: 20px;
+        font-size: 11px;
+      }
+
+      .logo {
+        font-weight: bold;
+        font-size: 28px;
+        margin-bottom: 20px;
+        width: auto;
+      }
+
+      .logo img {
+        width: 800px;
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin: 0;
+        font-weight: bold;
+      }
+
+      .section-title {
+        margin-top: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        border-top: 5px double #000;
+        border-bottom: 5px double #000;
+        padding: 10px 0;
+      }
+
+      .activities {
+        margin: 20px 0;
+        border-left: 2px solid #000;
+        padding-left: 20px;
+        font-size: 11px;
+      }
+
+      .activities p {
+        margin: 5px 0;
+      }
+
+      .equal {
+        margin-top: 15px;
+        letter-spacing: 2px;
+      }
+
+      .footer-line {
+        margin-top: 30px;
+        border-top: 10px double #000;
+      }
+
+      .details {
+        margin-top: 30px;
+        font-size: 14px;
+      }
+
+      .date {
+        font-size: 24px;
+      }
+      .legal {
+        text-align: center;
+        font-size: 12px;
+        margin-top: 60px;
+      }
+
+      .bold {
+        font-weight: bold;
+      }
+
+      .spacing {
+        margin: 5px 0;
+      }
+
+      button {
+        border: 1px solid #000;
+        padding: 8px;
+        background:none;
+      }
+      button:hover {
+        background: #000;
+        cursor: pointer;
+        color: #a8c9d6;
+      }
+
+      #mainPage, #announcementPage {
+        text-align: center;
+      }
+
+
+      /* mini game */
+
+       .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 30px);
+      grid-template-rows: repeat(12, 30px);
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+   .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #001f3f;
+    color: #7fdbff;
+    border: 1px solid #0074D9;
+    font-size: 18px;
+    cursor: grab;
+    transition: transform 0.2s;
+    text-shadow: 0 0 5px #7fdbff;
+    box-shadow: 0 0 8px rgba(127, 219, 255, 0.3);
+  }
+
+  .cell.hovered {
+    transform: scale(1.5);
+    z-index: 2;
+    position: relative;
+  }
+
+  .cell.neighbor {
+    transform: scale(1.2);
+    z-index: 1;
+    position: relative;
+  }
+    .hud {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .panel {
+      border: 1px solid #001f3f;
+      padding: 5px 10px;
+      text-align: center;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+    .meter {
+      height: 8px;
+      background: #444;
+      margin-top: 4px;
+      position: relative;
+      width: 70px;
+    }
+    .meter-fill {
+      height: 100%;
+      background: #7fdbff;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #001f3f;
+    }
+    .panel.drop-target {
+      background-color: rgba(127, 219, 255, 0.3);
+    }
+    </style>
+  </head>
+  <body>
+    <div class="logo">
+      <img
+        src="https://github.com/daga96/public_assets/blob/main/Group%203.png?raw=true"
+        alt="Lumon Logo"
+      />
+    </div>
+    <div id="mainPage" class="page active">
+      <h3>NOTICE OF MANDATORY PROCEDURE</h3>
+      <p>
+        You are hereby instructed to sever your current activities. A
+        time-sensitive authorization code has been assigned to you. 
+        <h3>OPEN TO
+        ACTIVATE YOUR TEMPORARY CLEARANCE</h3>
+        <i>Keep a merry humor ever in your heart.</i> — Kier Eagan
+      </p>
+
+      <button onclick="showPage('announcementPage')">
+        Open Your Innie's Birthday Invitation
+      </button>
+    </div>
+
+    <div id="announcementPage" class="page">
+      <h2>Attention Macrodata Refiners!</h2>
+      <p>
+        You are all invited to the Board-sanctioned birthday party on June 21st,
+        2025.<br />
+        Consumable and intoxicating products shall be available as per
+        convenience.<br />
+        Please be at the designated location by 6:00 PM.
+      </p>
+      <p><strong>Do not be late for Kier is watching.</strong></p>
+      <div>
+        <button onclick="showPage('invitationPage')">View Details</button>
+        <button onclick="showPage('whatIsSeverancePage')">
+          What is Severance?
+        </button>
+      </div>
+    </div>
+
+    <div id="invitationPage" class="page">
+      <h1>YOUR INNIE IS INVITED TO</h1>
+      <h1>A BIRTHDAY OBSERVANCE FOR <span class="bold">DAGMARA L.</span></h1>
+
+      <div class="section-title">MACRODATA REFINEMENT</div>
+
+      <div class="activities">
+        <p class="bold">AUTHORIZED ACTIVITIES</p>
+        <p>WAFFLE PARTY</p>
+        <p>DEFIANT JAZZ</p>
+        <p>MUSIC DANCE EXPERIENCE</p>
+        <p>MELON PARTY</p>
+        <p class="equal">
+          P l e a s e &nbsp; T r y &nbsp; T o &nbsp; E n j o y &nbsp; E a c h
+          &nbsp; A c t i v i t y &nbsp; E q u a l l y
+        </p>
+      </div>
+
+      <div class="footer-line"></div>
+
+      <div class="details">
+        <p class="date">JUNE 21ST, 2025 | 6:00 PM</p>
+        <p class="spacing">LUMON INDUSTRIES</p>
+        <p>DRESSCODE: BUSINESS CASUAL</p>
+      </div> 
+      <div><button onclick="showPage('mainPage')">Main</button><button onclick="showPage('announcementPage')">Back</button></div>
+    </div>
+
+    <div id="whatIsSeverancePage" class="page">
+      <h2>What is Severance?</h2>
+      <p>
+        "Severance" is a science fiction series that explores the disturbing
+        implications of capitalism.<br />
+        For this birthday, we're celebrating in full Lumon style — innie
+        approved.
+      </p>
+      <p>Choose your participation level:</p>
+      <ul style="list-style: none; padding: 0">
+        <li><strong>☐ Watch Severance</strong> (preferred)</li>
+        <li>
+          <strong
+            >☐ Pretend you're having fun and try to conform to the theme [ dresscode, language, snacks etc]</strong
+          >
+        </li>
+      </ul>
+      <div><button onclick="showPage('mainPage')">Main</button><button onclick="showPage('announcementPage')">Back</button></div>
+      <button onclick="showPage('activityPage')">Refine Some Data</button>"
+    </div>
+    <div id="activityPage" class="page">
+      <h3>Cold Harbour</h3>
+      <div class="grid" id="grid"></div>
+        <div class="hud">
+          <div class="panel" data-meter="1">01<div class="meter"><div class="meter-fill" id="meter1"></div></div></div>
+          <div class="panel" data-meter="2">02<div class="meter"><div class="meter-fill" id="meter2"></div></div></div>
+          <div class="panel" data-meter="3">03<div class="meter"><div class="meter-fill" id="meter3"></div></div></div>
+          <div class="panel" data-meter="4">04<div class="meter"><div class="meter-fill" id="meter4"></div></div></div>
+          <div class="panel" data-meter="5">05<div class="meter"><div class="meter-fill" id="meter5"></div></div></div>
+        </div>
+        <div class="status" id="status">0x000000 : 0x000000</div>
+      <div><button onclick="showPage('mainPage')">Main</button><button onclick="showPage('whatIsSeverancePage')">Back</button></div>
+    </div>
+    <div class="legal bold">
+      <p>COPYRIGHT LUMON INDUSTRIES, INC.</p>
+      <p>ALL RIGHTS RESERVED</p>
+      <p>PRINTED IN U.S.A</p>
+      <p>DO NOT DISTRIBUTE</p>
+    </div>
+    <script>
+    const PAGE_KEY = 'currentPage';
+
+    function showPage(pageId) {
+      const pages = document.querySelectorAll(".page");
+      pages.forEach((page) => page.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+
+      // Save current page to localStorage
+      localStorage.setItem(PAGE_KEY, pageId);
+    }
+
+    // On page load, restore last visited page
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedPage = localStorage.getItem(PAGE_KEY);
+      const defaultPage = 'mainPage';
+      showPage(savedPage || defaultPage);
+    });
+  </script>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const statusDisplay = document.getElementById("status");
+    const meters = {
+      1: document.getElementById("meter1"),
+      2: document.getElementById("meter2"),
+      3: document.getElementById("meter3"),
+      4: document.getElementById("meter4"),
+      5: document.getElementById("meter5")
+    };
+    const meterValues = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0
+    };
+    const size = 12;
+    const rows = 12;
+    const cols = 12;
+    const cells = [];
+    let selections = 0;
+    let draggedCell = null;
+
+    // Initialize grid
+    for (let i = 0; i < size * size; i++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.textContent = Math.floor(Math.random() * 10);
+      cell.setAttribute("draggable", "true");
+      cell.dataset.index = i;
+      grid.appendChild(cell);
+      cells.push(cell);
+
+      // Setup drag events for cell
+      cell.addEventListener("dragstart", (e) => {
+        draggedCell = cell;
+        e.dataTransfer.setData("text/plain", cell.textContent);
+        e.dataTransfer.effectAllowed = "move";
+      });
+    }
+    
+    // Function to reorganize grid and remove empty spaces
+    function reorganizeGrid() {
+      // Collect all remaining numbers
+      const remainingNumbers = [];
+      cells.forEach(cell => {
+        if (cell.textContent !== "") {
+          remainingNumbers.push(parseInt(cell.textContent));
+          cell.textContent = "";
+          cell.setAttribute("draggable", "false");
+        }
+      });
+      
+      // Refill grid with remaining numbers and new random ones
+      cells.forEach((cell, i) => {
+        if (i < remainingNumbers.length) {
+          cell.textContent = remainingNumbers[i];
+        } else {
+          cell.textContent = Math.floor(Math.random() * 10);
+        }
+        cell.setAttribute("draggable", "true");
+      });
+    }
+
+    // Setup drop targets (meters)
+    const panels = document.querySelectorAll(".panel");
+    panels.forEach(panel => {
+      panel.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        panel.classList.add("drop-target");
+      });
+
+      panel.addEventListener("dragleave", () => {
+        panel.classList.remove("drop-target");
+      });
+
+      panel.addEventListener("drop", (e) => {
+        e.preventDefault();
+        panel.classList.remove("drop-target");
+        
+        if (draggedCell) {
+          const index = parseInt(draggedCell.dataset.index);
+          const number = parseInt(draggedCell.textContent);
+          const meterNumber = parseInt(panel.dataset.meter);
+          
+          // Add the number to the meter value
+          meterValues[meterNumber] += number;
+          
+          // Update the meter display
+          updateMeter(meterNumber);
+          
+          // Get and clear neighboring cells as well
+          const cellsToRemove = [index, ...getNeighbors(index)];
+          
+          // Remove cells and accumulate their values for the meter
+          cellsToRemove.forEach(cellIndex => {
+            const cell = cells[cellIndex];
+            if (cell.textContent !== "") {
+              // Add additional value from neighboring cells
+              const neighborValue = parseInt(cell.textContent) || 0;
+              if (cellIndex !== index) { // Avoid double-counting the dragged cell
+                meterValues[meterNumber] += neighborValue;
+              }
+              // Clear the cell
+              cell.textContent = "";
+              cell.style.backgroundColor = "#001f3f";
+              cell.setAttribute("draggable", "false");
+            }
+          });
+          
+          // Update meter again after adding neighbor values
+          updateMeter(meterNumber);
+          
+          // Reorganize grid to remove empty spaces
+          reorganizeGrid();
+          
+          selections++;
+          updateStatus();
+          
+          // Reset dragged cell
+          draggedCell = null;
+        }
+      });
+    });
+    
+    function updateMeter(meterNumber) {
+      const value = meterValues[meterNumber];
+      const percent = Math.min(100, value * 10); // Scale for visibility
+      meters[meterNumber].style.width = `${percent}%`;
+    }
+
+    function updateStatus() {
+      const hex1 = selections.toString(16).padStart(6, "0");
+      const hex2 = (selections * 2).toString(16).padStart(6, "0");
+      statusDisplay.textContent = `0x${hex1} : 0x${hex2}`;
+    }
+
+    // Handle cell hover for neighbor scaling
+    const getNeighbors = (index) => {
+      const neighbors = [];
+      const row = Math.floor(index / cols);
+      const col = index % cols;
+
+      const positions = [
+        [row - 1, col],     // top
+        [row + 1, col],     // bottom
+        [row, col - 1],     // left
+        [row, col + 1],     // right
+      ];
+
+      for (const [r, c] of positions) {
+        if (r >= 0 && r < rows && c >= 0 && c < cols) {
+          neighbors.push(r * cols + c);
+        }
+      }
+
+      return neighbors;
+    };
+
+    cells.forEach((cell, index) => {
+      cell.addEventListener('mouseover', () => {
+        cell.classList.add('hovered');
+        const neighbors = getNeighbors(index);
+        neighbors.forEach(i => {
+          cells[i].classList.add('neighbor');
+        });
+      });
+
+      cell.addEventListener('mouseout', () => {
+        cell.classList.remove('hovered');
+        const neighbors = getNeighbors(index);
+        neighbors.forEach(i => {
+          cells[i].classList.remove('neighbor');
+        });
+      });
+    });
+  </script>
+  </body>
+</html>
