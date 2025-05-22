@@ -157,6 +157,14 @@
       }
 
       /* mini game */
+      body.activity-mode {
+        background-color: #001f3f;
+      }
+
+      body.completion-mode {
+        background-color: #001f3f;
+      }
+
       #activityPage {
         background-color: #001f3f;
         border: 2px solid #7fdbff;
@@ -479,6 +487,18 @@
         const pages = document.querySelectorAll(".page");
         pages.forEach((page) => page.classList.remove("active"));
         document.getElementById(pageId).classList.add("active");
+
+        // Change body background for activity and completion pages
+        if (pageId === "activityPage") {
+          document.body.classList.add("activity-mode");
+          document.body.classList.remove("completion-mode");
+        } else if (pageId === "completionPage") {
+          document.body.classList.add("completion-mode");
+          document.body.classList.remove("activity-mode");
+        } else {
+          document.body.classList.remove("activity-mode");
+          document.body.classList.remove("completion-mode");
+        }
 
         // Save current page to localStorage
         localStorage.setItem(PAGE_KEY, pageId);
