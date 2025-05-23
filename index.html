@@ -758,7 +758,6 @@
 
       //mobile
 
-      // Touch support for mobile drag and drop
       cells.forEach((cell) => {
         cell.addEventListener("touchstart", handleTouchStart, {
           passive: true,
@@ -767,17 +766,21 @@
         cell.addEventListener("touchend", handleTouchEnd);
       });
 
-      let activeTouch = null;
+      let activeTouchCell = null;
       let touchClone = null;
 
       function handleTouchStart(e) {
-        activeTouch = e.target;
-        touchClone = e.target.cloneNode(true);
+        activeTouchCell = e.target;
+        touchClone = activeTouchCell.cloneNode(true);
         touchClone.style.position = "absolute";
         touchClone.style.pointerEvents = "none";
         touchClone.style.opacity = "0.7";
         touchClone.style.zIndex = "1000";
         document.body.appendChild(touchClone);
+
+        const touch = e.touches[0];
+        touchClone.style.left = `${touch.clientX - 15}px`;
+        touchClone.style.top = `${touch.clientY - 15}px`;
       }
 
       function handleTouchMove(e) {
@@ -787,8 +790,7 @@
         touchClone.style.left = `${touch.clientX - 15}px`;
         touchClone.style.top = `${touch.clientY - 15}px`;
 
-        // Prevent scrolling
-        e.preventDefault();
+        e.preventDefault(); // Prevent scrolling while dragging
       }
 
       function handleTouchEnd(e) {
@@ -800,25 +802,32 @@
           touch.clientY
         );
 
+        // Check if dropped on a meter panel
         if (dropTarget && dropTarget.closest(".panel")) {
           const meterId = dropTarget.closest(".panel").dataset.meter;
-          const value = parseInt(activeTouch.textContent);
+          const value = parseInt(activeTouchCell.textContent);
 
           if (!isNaN(value)) {
+            // EXACT same meter update logic as desktop:
             meterValues[meterId] += value;
-            meterValues[meterId] = Math.min(meterValues[meterId], 100);
-            meters[meterId].style.width = `${meterValues[meterId]}%`;
-            percentageDisplays[
-              meterId
-            ].textContent = `${meterValues[meterId]}%`;
-            activeTouch.textContent = "";
+            if (meterValues[meterId] > 100) meterValues[meterId] = 100;
+
+            meters[meterId].style.width = meterValues[meterId] + "%";
+            percentageDisplays[meterId].textContent =
+              meterValues[meterId] + "%";
+
+            // Clear the dragged cell
+            activeTouchCell.textContent = "";
+
+            // Call your reorganize function
             reorganizeGrid();
           }
         }
 
+        // Clean up
         touchClone.remove();
         touchClone = null;
-        activeTouch = null;
+        activeTouchCell = null;
       }
     </script>
   </body>
