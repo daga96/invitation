@@ -302,6 +302,53 @@
       .panel.drop-target {
         background-color: rgba(127, 219, 255, 0.3);
       }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 20px;
+          overflow: auto;
+        }
+
+        .logo img {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        .invitation {
+          padding: 0 10px;
+          max-width: 100%;
+        }
+
+        h1,
+        h2,
+        h3 {
+          font-size: 18px;
+        }
+
+        .date {
+          font-size: 20px;
+        }
+
+        .section-title {
+          font-size: 20px;
+          padding: 8px 0;
+        }
+
+        .buttons {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .panel {
+          width: 100%;
+          max-width: 250px;
+        }
+
+        .legal {
+          position: static;
+          margin-top: 20px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -715,6 +762,71 @@
           });
         });
       });
+
+      //mobile
+
+      // Touch support for mobile drag and drop
+      cells.forEach((cell) => {
+        cell.addEventListener("touchstart", handleTouchStart, {
+          passive: true,
+        });
+        cell.addEventListener("touchmove", handleTouchMove, { passive: false });
+        cell.addEventListener("touchend", handleTouchEnd);
+      });
+
+      let activeTouch = null;
+      let touchClone = null;
+
+      function handleTouchStart(e) {
+        activeTouch = e.target;
+        touchClone = e.target.cloneNode(true);
+        touchClone.style.position = "absolute";
+        touchClone.style.pointerEvents = "none";
+        touchClone.style.opacity = "0.7";
+        touchClone.style.zIndex = "1000";
+        document.body.appendChild(touchClone);
+      }
+
+      function handleTouchMove(e) {
+        if (!touchClone || !e.touches.length) return;
+
+        const touch = e.touches[0];
+        touchClone.style.left = `${touch.clientX - 15}px`;
+        touchClone.style.top = `${touch.clientY - 15}px`;
+
+        // Prevent scrolling
+        e.preventDefault();
+      }
+
+      function handleTouchEnd(e) {
+        if (!touchClone) return;
+
+        const touch = e.changedTouches[0];
+        const dropTarget = document.elementFromPoint(
+          touch.clientX,
+          touch.clientY
+        );
+
+        if (dropTarget && dropTarget.closest(".panel")) {
+          const meterId = dropTarget.closest(".panel").dataset.meter;
+          const value = parseInt(activeTouch.textContent);
+
+          if (!isNaN(value)) {
+            meterValues[meterId] += value;
+            meterValues[meterId] = Math.min(meterValues[meterId], 100);
+            meters[meterId].style.width = `${meterValues[meterId]}%`;
+            percentageDisplays[
+              meterId
+            ].textContent = `${meterValues[meterId]}%`;
+            activeTouch.textContent = "";
+            reorganizeGrid();
+          }
+        }
+
+        touchClone.remove();
+        touchClone = null;
+        activeTouch = null;
+      }
     </script>
   </body>
 </html>
